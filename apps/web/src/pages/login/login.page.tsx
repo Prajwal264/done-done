@@ -102,7 +102,7 @@ const LoginPage: React.FC<ILoginPageProps> = () => {
           errorAttr={{
             errorValue: errorMap.password
           }} />
-        <PrimaryButton content="Log in" type="button" onClick={login} loading={loading} />
+        <PrimaryButton disabled={!!(errorMap.email || errorMap.password || !formData.email || !formData.password)} content="Log in" type="button" onClick={login} loading={loading} />
         <div className={styles.note}>
           By continuing you agree to DoneDone Terms of Service and Privacy Policy .
         </div>
