@@ -5,6 +5,9 @@ import PrimaryButton from '../../components/primary-button/primary-button.compon
 import FormInput from '../../components/form-field/form-field.component';
 import React, { useCallback, useState } from 'react';
 import User, { RegisterPayload } from '../../services/api/user.api.service';
+import { validateEmail } from '../../helpers/validation.helpers';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface ISignupPageProps { }
 
@@ -12,12 +15,19 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    dob: new Date(),
   });
+  const [errorMap, setErrorMap] = useState({
+    email: '',
+    password: '',
+    dob: ''
+  })
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       const { name, value } = e.target;
+      validateErrors(name, value);
       setFormData({
         ...formData,
         [name]: value,
@@ -25,6 +35,35 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
     },
     [formData],
   );
+
+  const validateErrors = (field: string, value: string) => {
+    if (field === 'email') {
+      if (!validateEmail(value)) {
+        setErrorMap({
+          ...errorMap,
+          email: 'Please Enter a Valid Email',
+        })
+      } else {
+        setErrorMap({
+          ...errorMap,
+          email: '',
+        })
+      }
+    } else if (field === 'password') {
+      const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+      if (!re.test(value)) {
+        setErrorMap({
+          ...errorMap,
+          password: 'Please enter an 8 letter password, with at least a symbol, upper and lower case letters and a number',
+        })
+      } else {
+        setErrorMap({
+          ...errorMap,
+          password: '',
+        })
+      }
+    }
+  }
   const signup: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     async (e) => {
       e.stopPropagation();
@@ -43,6 +82,15 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
     [formData],
   );
 
+  const setDateOfBirth = (date: Date | null) => {
+    if (date) {
+      setFormData({
+        ...formData,
+        dob: date,
+      });
+    }
+  }
+
   return (
     <div className={styles.signupPage}>
       <form className={styles.signupForm}>
@@ -52,6 +100,8 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
         <h1 className={styles.signupFormHeader}>Sign up</h1>
         <FormInput type="email" name="email" label={'Email'} onChange={handleChange} />
         <FormInput type="password" name="password" label={'Password'} onChange={handleChange} />
+        <label htmlFor={'dob'}>Date of Birth</label>
+        <DatePicker className={styles.datePicker} selected={formData.dob} onChange={(date) => setDateOfBirth(date)} />
         <PrimaryButton content="Create Account" type="button" onClick={signup} loading={loading} />
         <div className={styles.note}>
           By continuing with Google, Apple, or Email, you agree to DoneDone Terms of Service and Privacy Policy .
