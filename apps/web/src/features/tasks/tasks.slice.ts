@@ -1,28 +1,59 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Task, { CreateTaskPayload, EditTaskPayload, IFetchTasksResponse, ITask, ReorderTaskPayload } from '../../services/api/task.api.service';
+import { toast } from 'react-hot-toast';
 
 const initialState: ITask[] = []
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const response = await new Task().fetchAll();
+  const fetchTasksPromise = new Task().fetchAll();
+  toast.promise(fetchTasksPromise, {
+    loading: 'Fetching Tasks',
+    error: "Something went wrong",
+    success: 'Tasks fetched successfully'
+  })
+  const response = await fetchTasksPromise;
   return response;
 });
 
 export const addTask = createAsyncThunk('tasks/addTask', async (task: CreateTaskPayload) => {
-  const response = await new Task().create(task);
+  const addTaskPromise = new Task().create(task);
+  toast.promise(addTaskPromise, {
+    loading: 'Adding Task',
+    error: "Something went wrong",
+    success: 'Task added successfully'
+  });
+  const response = await addTaskPromise;
   return response;
 });
 
 export const editTask = createAsyncThunk('tasks/editTask', async (task: EditTaskPayload) => {
-  await new Task().update(task.taskId, task);
+  const editTaskPromise = new Task().update(task.taskId, task);
+  toast.promise(editTaskPromise, {
+    loading: 'Editing Task',
+    error: "Something went wrong",
+    success: 'Task edited successfully'
+  });
+  await editTaskPromise;
   return task;
 });
 export const deleteTask = createAsyncThunk('tasks/deleteTask', async (taskId: string) => {
-  await new Task().remove(taskId);
+  const deleteTaskPromise = new Task().remove(taskId);
+  toast.promise(deleteTaskPromise, {
+    loading: 'Deleting Task',
+    error: "Something went wrong",
+    success: 'Task deleted successfully'
+  });
+  await deleteTaskPromise;
   return taskId;
 });
 export const reorderTasks = createAsyncThunk('tasks/reorderTasks', async (payload: ReorderTaskPayload) => {
-  await new Task().reorder(payload);
+  const reorderTaskPromise = new Task().reorder(payload);
+  toast.promise(reorderTaskPromise, {
+    loading: 'Reording Task',
+    error: "Something went wrong",
+    success: 'Task reordered successfully'
+  });
+  await reorderTaskPromise;
   return payload;
 });
 

@@ -81,7 +81,7 @@ const TaskItem: FC<IProps> = ({ task, index, isDragDropDisabled = false }) => {
                   <div className={styles.infoFlags}>
                     <div className={styles.project}>
                       <a href="/all">
-                        <span>Alltasks</span>
+                        <span>All Tasks</span>
                         <IconInbox />
                       </a>
                     </div>
