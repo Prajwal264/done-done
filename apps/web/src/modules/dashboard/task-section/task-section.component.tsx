@@ -25,17 +25,15 @@ const TaskSection: FC<ITaskSectionProps> = ({ heading, tasks, isDragDropDisabled
       return;
     }
 
-    const updatedTasks = reorder(
-      tasks,
-      result.source.index,
-      result.destination.index,
-    );
+    const updatedTasks = reorder(tasks, result.source.index, result.destination.index);
 
-    dispatch(reorderTasks({
-      updatedTasks,
-      sourceIndex: result.source.index,
-      destinationIndex: result.destination.index,
-    }))
+    dispatch(
+      reorderTasks({
+        updatedTasks,
+        sourceIndex: result.source.index,
+        destinationIndex: result.destination.index,
+      }),
+    );
   }
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -52,11 +50,14 @@ const TaskSection: FC<ITaskSectionProps> = ({ heading, tasks, isDragDropDisabled
               )}
               <div className={styles.listHolder}>
                 <ul className={styles.items}>
-                  {tasks.map((task, index) => (
-                    <li key={task.taskId}>
-                      <TaskItem task={task} index={index} isDragDropDisabled={isDragDropDisabled} />
-                    </li>
-                  ))}
+                  {tasks.map(
+                    (task, index) =>
+                      task && (
+                        <li key={task.taskId}>
+                          <TaskItem task={task} index={index} isDragDropDisabled={isDragDropDisabled} />
+                        </li>
+                      ),
+                  )}
                 </ul>
               </div>
             </div>
