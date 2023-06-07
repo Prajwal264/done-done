@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import styles from './post-login-header.module.scss';
 import Hamburger from '../../assets/icons/icon-hamburger.svg';
-import Home from '../../assets/icons/icon-home.svg';
+import Logout from '../../assets/icons/icon-logout.svg';
 import AddIcon from '../../assets/icons/icon-add.svg';
 import { useDispatch } from 'react-redux';
 import { toggleSidebar } from '../../features/sidebar/sidebar.slice';
@@ -61,7 +61,7 @@ const PostLoginHeader: React.FC<IPostLoginHeaderProps> = () => {
             className={styles.topbarBtn}
             onClick={logout}
           >
-            <Home />
+            <Logout />
           </button>
         </div>
       </header>
