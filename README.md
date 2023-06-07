@@ -98,17 +98,17 @@ yarn dev
 
 This will start both the frontend (React) and backend (Node.js) servers concurrently.
 
-Access the application in your web browser at http://localhost:3001
+Access the application in your web browser at `http://localhost:3001`
 
 ### Configuration
 The application requires some configuration to run properly. Make sure to set up the following environment variables:
 
-.env should be created under /apps/server/
+.env should be created under `/apps/server/`
 CLIENT_ORIGIN = http://localhost:3001
 PORT = 4000
 
-.env should be created under /apps/web/
-BASE_API_URL=http://localhost:4000
+.env should be created under `/apps/web/`
+BASE_API_URL = http://localhost:4000
 
 ### Deployment
 This application auto deploys to the orender on push to **main** branch
