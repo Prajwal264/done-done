@@ -18,23 +18,23 @@ import AddTask from '../../modules/dashboard/add-task/add-task.component';
 
 const addTaskEditorId = 'TASK_DETAILS_MODAL_ADD_TASK_EDITOR';
 
-const TABS: ITab[] = [
-  {
-    tabId: TaskDetailModalTabs.SUB_TASKS,
-    tabname: 'Sub-tasks',
-    component: <SubTasksTab />,
-  },
-  {
-    tabId: TaskDetailModalTabs.COMMENTS,
-    tabname: 'Comments',
-    component: <CommentsTab />,
-  },
-  {
-    tabId: TaskDetailModalTabs.ACTIVITY,
-    tabname: 'Activity',
-    component: <ActivitiesTab />,
-  },
-];
+// const TABS: ITab[] = [
+//   {
+//     tabId: TaskDetailModalTabs.SUB_TASKS,
+//     tabname: 'Sub-tasks',
+//     component: <SubTasksTab />,
+//   },
+//   {
+//     tabId: TaskDetailModalTabs.COMMENTS,
+//     tabname: 'Comments',
+//     component: <CommentsTab />,
+//   },
+//   {
+//     tabId: TaskDetailModalTabs.ACTIVITY,
+//     tabname: 'Activity',
+//     component: <ActivitiesTab />,
+//   },
+// ];
 
 interface Props { }
 
@@ -89,7 +89,7 @@ const TaskDetailsModal: React.FC<Props> = ({ }) => {
                   <div className={styles.contentDetailsParentIcon}>
                     <IconInbox />
                   </div>
-                  <div className={styles.contentDetailsParentName}>Inbox</div>
+                  <div className={styles.contentDetailsParentName}>Task</div>
                 </Link>
               </div>
             </div>
@@ -124,7 +124,7 @@ const TaskDetailsModal: React.FC<Props> = ({ }) => {
                   </div>
                 </div>
               ))}
-            <Tabs defaultTab={taskDetails.activeTab!} tabs={TABS} />
+            {/* <Tabs defaultTab={taskDetails.activeTab!} tabs={TABS} /> */}
           </div>
         </div>
       </div>

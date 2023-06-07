@@ -22,7 +22,7 @@ class User extends RestApi {
     };
   }
 
-  public async register(payload: RegisterPayload): Promise<GenericSuccessResponse> {
+  public async register(payload: RegisterPayload): Promise<LoginResponse> {
     return this.post('register', payload);
   }
 

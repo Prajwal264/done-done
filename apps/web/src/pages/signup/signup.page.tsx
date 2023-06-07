@@ -8,6 +8,8 @@ import User, { RegisterPayload } from '../../services/api/user.api.service';
 import { validateEmail } from '../../helpers/validation.helpers';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { setAccessToken, setRefreshToken } from '../../helpers/token.helper';
+import { toast } from 'react-hot-toast';
 
 interface ISignupPageProps { }
 
@@ -73,10 +75,21 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
         email,
         password,
       };
-      const registerResponse = await new User().register(payload)?.catch(() => setLoading(false));
-      setLoading(false);
+      const registerPromise = new User().register(payload)?.catch(() => setLoading(false));
+      toast.promise(registerPromise, {
+        loading: 'Registering User',
+        error: (e) => {
+          debugger;
+          return e;
+        },
+        success: 'User Registered Successfully',
+      });
+      const registerResponse = await registerPromise;
       if (registerResponse) {
-        navigate('/login');
+        setLoading(false);
+        setAccessToken(registerResponse.acesssToken);
+        setRefreshToken(registerResponse.refreshToken);
+        navigate('/app/');
       }
     },
     [formData],
@@ -98,11 +111,23 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
           <img src={logo} alt="logo" width={170} />
         </NavLink>
         <h1 className={styles.signupFormHeader}>Sign up</h1>
-        <FormInput type="email" name="email" label={'Email'} onChange={handleChange} />
-        <FormInput type="password" name="password" label={'Password'} onChange={handleChange} />
+        <FormInput type="email" name="email" label={'Email'} onChange={handleChange}
+          inputAttributes={{
+            className: errorMap.email ? 'error' : '',
+          }}
+          errorAttr={{
+            errorValue: errorMap.email
+          }} />
+        <FormInput type="password" name="password" label={'Password'} onChange={handleChange}
+          inputAttributes={{
+            className: errorMap.password ? 'error' : '',
+          }}
+          errorAttr={{
+            errorValue: errorMap.password
+          }} />
         <label htmlFor={'dob'}>Date of Birth</label>
         <DatePicker className={styles.datePicker} selected={formData.dob} onChange={(date) => setDateOfBirth(date)} />
-        <PrimaryButton content="Create Account" type="button" onClick={signup} loading={loading} />
+        <PrimaryButton disabled={!!(errorMap.email || errorMap.password || !formData.email || !formData.password || !formData.dob)} content="Create Account" type="button" onClick={signup} loading={loading} />
         <div className={styles.note}>
           By continuing with Google, Apple, or Email, you agree to DoneDone Terms of Service and Privacy Policy .
         </div>

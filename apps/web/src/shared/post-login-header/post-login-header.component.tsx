@@ -2,19 +2,20 @@ import { useCallback, useState } from 'react';
 import styles from './post-login-header.module.scss';
 import Hamburger from '../../assets/icons/icon-hamburger.svg';
 import Home from '../../assets/icons/icon-home.svg';
-import SearchIcon from '../../assets/icons/icon-search.svg';
 import AddIcon from '../../assets/icons/icon-add.svg';
-import GraphIcon from '../../assets/icons/icon-graphup.svg';
-import NotificationIcon from '../../assets/icons/icon-notification.svg';
 import { useDispatch } from 'react-redux';
 import { toggleSidebar } from '../../features/sidebar/sidebar.slice';
 import AddTaskModal from '../../components/popups/add-task-modal/add-task-modal.component';
+import { removeAccessToken, removeRefreshToken } from '../../helpers/token.helper';
+import { useNavigate } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 
 interface IPostLoginHeaderProps { }
 
 const PostLoginHeader: React.FC<IPostLoginHeaderProps> = () => {
   const dispatch = useDispatch();
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+  const navigate = useNavigate();
   const triggerSidebarToggle: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {
       event.stopPropagation();
@@ -31,6 +32,12 @@ const PostLoginHeader: React.FC<IPostLoginHeaderProps> = () => {
     setShowAddTaskModal(false);
   }, []);
 
+  const logout = useCallback(() => {
+    removeAccessToken();
+    removeRefreshToken();
+    navigate('/login');
+  }, []);
+
   return (
     <div className={styles.postLoginHeader}>
       <header className={styles.topBar}>
@@ -40,12 +47,22 @@ const PostLoginHeader: React.FC<IPostLoginHeaderProps> = () => {
           </button>
         </div>
         <div className={styles.rightControl}>
-          <button className={styles.topbarBtn} onClick={openAddTaskModal}>
+          <button
+            data-tooltip-id="header-tooltip"
+            data-tooltip-content={'Add a new Task'}
+            className={styles.topbarBtn} onClick={openAddTaskModal}>
             <AddIcon />
+          </button>
+          <button
+            data-tooltip-id="header-tooltip"
+            data-tooltip-content={'Logout'}
+            className={styles.topbarBtn} onClick={logout}>
+            <Home />
           </button>
         </div>
       </header>
       {showAddTaskModal && <AddTaskModal closePopup={closeAddTaskModal} />}
+      <Tooltip id="header-tooltip" place='left' />
     </div>
   );
 };
