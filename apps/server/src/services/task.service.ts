@@ -34,11 +34,11 @@ export class TaskService {
       new UserTaskList({
         creatorId,
         tasks: [{
-          taskId: taskId,
-          title: title,
-          description: description,
+          taskId,
+          title,
+          description,
           completed: false,
-        }]
+        }],
       }).save();
     } else {
       userTaskList.tasks.push({
@@ -63,10 +63,12 @@ export class TaskService {
   public async deleteOne(taskId: string, creatorId: string): Promise<boolean> {
     await UserTaskList.updateOne({
       creatorId,
-    },
-      { $pull: { tasks: { taskId } } },
-      { safe: true, multi: false }
-    )
+    }, {
+      $pull: { tasks: { taskId } },
+    }, {
+      safe: true,
+      multi: false,
+    });
     await Task.deleteOne({ taskId });
     return true;
   }
@@ -74,16 +76,16 @@ export class TaskService {
   public async fetchAllForCreator(creatorId: string): Promise<LeanDocument<IUserTaskList['tasks']>> {
     const taskList = await UserTaskList.findOne({
       creatorId,
-    }).lean()
+    }).lean();
     if (!taskList) {
-      return []
+      return [];
     }
     return taskList.tasks as LeanDocument<IUserTaskList['tasks']>;
   }
 
   public async reorderTasks({
     sourceIndex,
-    destinationIndex
+    destinationIndex,
   }: {
     sourceIndex: number,
     destinationIndex: number,
@@ -98,7 +100,7 @@ export class TaskService {
       }, {
         $set: {
           tasks: result,
-        }
+        },
       });
     }
   }
@@ -125,19 +127,24 @@ export class TaskService {
       updatedTask.scheduledDate = updatedPayload.scheduledDate;
     }
     await Task.updateOne({ taskId }, updatedTask);
-    await UserTaskList.updateOne({
+    const userTaskList = await UserTaskList.findOne({
       creatorId: task.creatorId,
-    }, {
-      $set: {
-        'tasks.$[task]': {
-          taskId: task.taskId,
-          title: task.title,
-          description: task.description,
-          completed: task.completed,
-        }
-      }
-    }, {
-      arrayFilters: [{ 'task.taskId': taskId }]
     });
+    if (userTaskList) {
+      if (userTaskList.tasks.length) {
+        userTaskList.tasks = userTaskList?.tasks.map((item) => {
+          if (item.taskId === taskId) {
+            return {
+              taskId: task.taskId,
+              title: updatedPayload.title ?? task.title,
+              description: updatedPayload.description ?? task.description,
+              completed: updatedPayload.completed ?? task.completed,
+            };
+          }
+          return task;
+        });
+      }
+      userTaskList?.save();
+    }
   }
 }

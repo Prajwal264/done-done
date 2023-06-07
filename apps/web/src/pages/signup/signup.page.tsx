@@ -6,8 +6,8 @@ import FormInput from '../../components/form-field/form-field.component';
 import React, { useCallback, useState } from 'react';
 import User, { RegisterPayload } from '../../services/api/user.api.service';
 import { validateEmail } from '../../helpers/validation.helpers';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { setAccessToken, setRefreshToken } from '../../helpers/token.helper';
 import { toast } from 'react-hot-toast';
 
@@ -22,8 +22,8 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
   const [errorMap, setErrorMap] = useState({
     email: '',
     password: '',
-    dob: ''
-  })
+    dob: '',
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -44,28 +44,29 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
         setErrorMap({
           ...errorMap,
           email: 'Please Enter a Valid Email',
-        })
+        });
       } else {
         setErrorMap({
           ...errorMap,
           email: '',
-        })
+        });
       }
     } else if (field === 'password') {
       const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
       if (!re.test(value)) {
         setErrorMap({
           ...errorMap,
-          password: 'Please enter an 8 letter password, with at least a symbol, upper and lower case letters and a number',
-        })
+          password:
+            'Please enter an 8 letter password, with at least a symbol, upper and lower case letters and a number',
+        });
       } else {
         setErrorMap({
           ...errorMap,
           password: '',
-        })
+        });
       }
     }
-  }
+  };
   const signup: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     async (e) => {
       e.stopPropagation();
@@ -75,16 +76,18 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
         email,
         password,
       };
-      const registerPromise = new User().register(payload)?.catch(() => setLoading(false));
+      const registerPromise = new User().register(payload);
       toast.promise(registerPromise, {
         loading: 'Registering User',
         error: (e) => {
-          debugger;
-          return e;
+          if (!e?.response?.data?.error) {
+            return 'Something Went wrong';
+          }
+          return e?.response?.data?.error;
         },
         success: 'User Registered Successfully',
       });
-      const registerResponse = await registerPromise;
+      const registerResponse = await registerPromise.catch(() => setLoading(false));
       if (registerResponse) {
         setLoading(false);
         setAccessToken(registerResponse.acesssToken);
@@ -102,7 +105,7 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
         dob: date,
       });
     }
-  }
+  };
 
   return (
     <div className={styles.signupPage}>
@@ -111,23 +114,39 @@ const SignupPage: React.FC<ISignupPageProps> = () => {
           <img src={logo} alt="logo" width={170} />
         </NavLink>
         <h1 className={styles.signupFormHeader}>Sign up</h1>
-        <FormInput type="email" name="email" label={'Email'} onChange={handleChange}
+        <FormInput
+          type="email"
+          name="email"
+          label={'Email'}
+          onChange={handleChange}
           inputAttributes={{
             className: errorMap.email ? 'error' : '',
           }}
           errorAttr={{
-            errorValue: errorMap.email
-          }} />
-        <FormInput type="password" name="password" label={'Password'} onChange={handleChange}
+            errorValue: errorMap.email,
+          }}
+        />
+        <FormInput
+          type="password"
+          name="password"
+          label={'Password'}
+          onChange={handleChange}
           inputAttributes={{
             className: errorMap.password ? 'error' : '',
           }}
           errorAttr={{
-            errorValue: errorMap.password
-          }} />
+            errorValue: errorMap.password,
+          }}
+        />
         <label htmlFor={'dob'}>Date of Birth</label>
         <DatePicker className={styles.datePicker} selected={formData.dob} onChange={(date) => setDateOfBirth(date)} />
-        <PrimaryButton disabled={!!(errorMap.email || errorMap.password || !formData.email || !formData.password || !formData.dob)} content="Create Account" type="button" onClick={signup} loading={loading} />
+        <PrimaryButton
+          disabled={!!(errorMap.email || errorMap.password || !formData.email || !formData.password || !formData.dob)}
+          content="Create Account"
+          type="button"
+          onClick={signup}
+          loading={loading}
+        />
         <div className={styles.note}>
           By continuing with Google, Apple, or Email, you agree to DoneDone Terms of Service and Privacy Policy .
         </div>

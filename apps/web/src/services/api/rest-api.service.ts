@@ -44,6 +44,7 @@ class RestApi {
   }
 
   public async post(url: string, payload: any, params?: Record<string, string>) {
+    debugger;
     const response = await this.axios?.post(url, payload, {
       params,
     });

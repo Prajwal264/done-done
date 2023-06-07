@@ -50,19 +50,23 @@ const PostLoginHeader: React.FC<IPostLoginHeaderProps> = () => {
           <button
             data-tooltip-id="header-tooltip"
             data-tooltip-content={'Add a new Task'}
-            className={styles.topbarBtn} onClick={openAddTaskModal}>
+            className={styles.topbarBtn}
+            onClick={openAddTaskModal}
+          >
             <AddIcon />
           </button>
           <button
             data-tooltip-id="header-tooltip"
             data-tooltip-content={'Logout'}
-            className={styles.topbarBtn} onClick={logout}>
+            className={styles.topbarBtn}
+            onClick={logout}
+          >
             <Home />
           </button>
         </div>
       </header>
       {showAddTaskModal && <AddTaskModal closePopup={closeAddTaskModal} />}
-      <Tooltip id="header-tooltip" place='left' />
+      <Tooltip id="header-tooltip" place="left" />
     </div>
   );
 };

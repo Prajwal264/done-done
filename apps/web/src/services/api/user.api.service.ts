@@ -1,4 +1,4 @@
-import { GenericSuccessResponse, RestApi } from './rest-api.service';
+import { RestApi } from './rest-api.service';
 
 export interface RegisterPayload {
   email: string;
