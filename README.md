@@ -1,81 +1,122 @@
-# Turborepo starter
+## Done Done
+Not just a simple todo list application
 
-This is an official starter Turborepo.
+![logo](https://github.com/Prajwal264/done-done/assets/53701638/daf1d115-2343-4df2-a155-782e79d6023f)
 
-## Using this example
 
-Run the following command:
+This is a monorepo containing a full-stack Todo List application built using React + Redux, Node.js, and Inversify Express. The application allows users to create, edit, delete, and manage tasks in a simple and intuitive interface. It also provides authentication and authorization using JWT tokens.
 
-```sh
-npx create-turbo@latest
+The application is currently deployed and accessible at https://done-done.onrender.com/.
+
+### Features
+- User authentication and authorization using JWT tokens.
+- Two main pages:
+  - All Tasks: Lists all tasks, including both completed and uncompleted ones.
+  - Completed: Lists only the completed tasks.
+- Task management:
+  - Create new tasks.
+  - Edit existing tasks.
+  - Delete tasks.
+  - Toggle the completion state of tasks.
+  - Drag and drop feature for task listing.
+ 
+### Technologies Used
+**React**: A popular JavaScript library for building user interfaces.
+**Node.js**: A JavaScript runtime environment for server-side development.
+**Inversify Express**: A lightweight inversion of control (IoC) container for Express.js applications.
+
+### Prerequisites
+Make sure you have the following software installed on your machine:
+
+**Node.js**: https://nodejs.org/
+**Yarn (optional)**: https://yarnpkg.com/
+
+### Screenshots
+#### Homepage
+-----
+<img width="1440" alt="Screenshot 2023-06-07 at 9 44 13 PM" src="https://github.com/Prajwal264/done-done/assets/53701638/be6d6f5d-7fbc-4d88-9759-8181176d9fe2">
+
+#### Signup Page
+-----
+<img width="1440" alt="Screenshot 2023-06-07 at 9 44 22 PM" src="https://github.com/Prajwal264/done-done/assets/53701638/419e40e7-cdd6-4b4a-85c5-7df15421f705">
+
+#### Login Page
+-----
+<img width="1440" alt="Screenshot 2023-06-07 at 9 44 29 PM" src="https://github.com/Prajwal264/done-done/assets/53701638/77559b9f-5ce2-4649-922a-838299781d92">
+
+#### All Tasks Page
+-----
+<img width="1440" alt="Screenshot 2023-06-07 at 10 07 43 PM" src="https://github.com/Prajwal264/done-done/assets/53701638/19e5704d-35ca-411b-acbb-fab06f1d2d7a">
+
+#### Completed Tasks Page
+------
+<img width="1440" alt="Screenshot 2023-06-07 at 10 07 50 PM" src="https://github.com/Prajwal264/done-done/assets/53701638/c1db3e95-d4d1-4b92-9618-9bad2899e796">
+
+#### Add Tasks Modal
+--------
+<img width="1440" alt="Screenshot 2023-06-07 at 10 09 16 PM" src="https://github.com/Prajwal264/done-done/assets/53701638/323f861c-d048-4912-a789-918db86e4684">
+
+#### Edit Task 
+-------
+<img width="1440" alt="Screenshot 2023-06-07 at 10 09 42 PM" src="https://github.com/Prajwal264/done-done/assets/53701638/84fbc85c-3b72-4cb8-bb73-36d860460437">
+
+#### Responsive
+------
+<img width="391" alt="Screenshot 2023-06-07 at 10 09 33 PM" src="https://github.com/Prajwal264/done-done/assets/53701638/b25cfaf5-8064-49e7-b97a-0a890d16d670">
+
+
+### Installation
+To set up the Todo List application locally, follow these steps:
+
+Clone the repository:
+```bash
+git clone https://github.com/Prajwal264/done-done done-done
 ```
 
-## What's inside?
+Navigate to the project directory:
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+```bash
+cd done-done
 ```
-cd my-turborepo
-pnpm build
+Install the dependencies:
+
+```bash
+yarn install
 ```
 
-### Develop
+Usage
+Start the typescript server:
 
-To develop all apps and packages, run the following command:
-
+```bash
+yarn watch
 ```
-cd my-turborepo
-pnpm dev
-```
+Start the development server:
 
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```bash
+yarn dev
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+This will start both the frontend (React) and backend (Node.js) servers concurrently.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+Access the application in your web browser at http://localhost:3001
 
-```
-npx turbo link
-```
+### Configuration
+The application requires some configuration to run properly. Make sure to set up the following environment variables:
 
-## Useful Links
+.env should be created under /apps/server/
+CLIENT_ORIGIN = http://localhost:3001
+PORT = 4000
 
-Learn more about the power of Turborepo:
+.env should be created under /apps/web/
+BASE_API_URL=http://localhost:4000
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+### Deployment
+This application auto deploys to the orender on push to **main** branch
+
+### Contributing
+Contributions to this project are welcome. Feel free to open issues and submit pull requests.
+
+### License
+This project is licensed under the MIT License.
+
+Thank you for using the application! If you have any questions or need further assistance, please contact prajwal.praveen1997@gmail.com.
