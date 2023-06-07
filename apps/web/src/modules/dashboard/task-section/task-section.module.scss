@@ -1,0 +1,54 @@
+.singleSection {
+  .sectionContentTop {
+    display: flex;
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 73px;
+    background-color: #fff;
+    border: #ddd;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0;
+    z-index: 2;
+    h2 {
+      text-align: left;
+      padding: 6px 30px 5px 0;
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      flex: 1;
+      margin: 0;
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+    .sectionContentTopActions {
+      .rescheduleMenuButton {
+        font-size: 14px;
+        color: #d1453b;
+        font-family: inherit;
+        text-decoration: none;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .listHolder {
+    .items {
+      margin: 0;
+      padding: 0;
+      margin-bottom: 30px;
+      list-style-type: none;
+      li {
+        padding: 0 0 0 3px;
+        color: #555;
+      }
+    }
+  }
+}

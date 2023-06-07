@@ -1,0 +1,31 @@
+.formField {
+  margin-bottom: 10px;
+  position: relative;
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 0.75em 1em;
+    width: 100%;
+  }
+  img {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    &:hover {
+      background: #eee;
+      border-radius: 3px;
+    }
+  }
+}

@@ -1,0 +1,116 @@
+.addTaskModal {
+  padding: 0;
+  outline: none;
+  transition: box-shadow 0.5s;
+  width: 580px;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  max-width: 550px;
+  flex-grow: 0;
+  box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.35);
+  .modalBody {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+    color: inherit;
+    padding: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 0.875rem;
+    background-color: inherit;
+    form {
+      padding: 0;
+      margin: 0;
+      .editingArea {
+        border: none;
+        padding: 0;
+        border-radius: 10px;
+        .inputFields {
+          max-height: 200px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          margin-bottom: 10px;
+          input {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            line-height: 21px;
+            border: none;
+            outline: none;
+            word-break: break-word;
+            width: 100%;
+            &::placeholder {
+              opacity: 0.6;
+            }
+          }
+          .textAreaWrapper {
+            box-sizing: border-box;
+            border: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            font-family: inherit;
+            vertical-align: baseline;
+            background-color: transparent;
+            list-style: none;
+            textarea {
+              transition-property: box-shadow, border;
+              transition-duration: 0.3s;
+              transition-timing-function: ease;
+              border: none;
+              margin: 8px 0 0;
+              padding: 1px;
+              width: 100%;
+              font-size: 13px;
+              line-height: 18px;
+              overflow: hidden;
+              outline: none;
+              height: 36px !important;
+              &::placeholder {
+                opacity: 0.6;
+              }
+            }
+          }
+        }
+      }
+      .formActions {
+        margin: 6px -16px -16px;
+        padding: 16px;
+        border-top: 1px solid #ddd;
+        .actionsContainer {
+          margin-right: 5px;
+          border-radius: 3px;
+          flex-direction: row;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: flex-start;
+          margin-left: -12px;
+          margin-top: -12px;
+          button {
+            max-width: max-content;
+            margin-bottom: unset;
+            margin: 12px 0 0 12px;
+          }
+          button:last-of-type {
+            color: rgba(0, 0, 0, 0.88);
+            background-color: transparent;
+            border-color: #d6d6d6;
+            &:hover {
+              background-color: #ebebeb;
+              border-color: #bdbdbd;
+            }
+          }
+        }
+      }
+    }
+  }
+}

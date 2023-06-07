@@ -1,0 +1,35 @@
+.appLayoutWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  -webkit-animation-name: effect-fade-in;
+  animation-name: effect-fade-in;
+  -webkit-animation-duration: 0.12s;
+  animation-duration: 0.12s;
+  .appLayout {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    .mainContent {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      min-height: 380px;
+      background-color: #fff;
+      transition: opacity 0.25s cubic-bezier(0.4, 0, 0.6, 1);
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overflow: hidden auto;
+      outline: 0;
+      transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-left: 308px;
+      @media screen and (max-width: 750px) {
+        margin-left: 0;
+      }
+      &.moveLeft {
+        margin-left: 0;
+      }
+    }
+  }
+}
