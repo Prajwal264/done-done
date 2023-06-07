@@ -87,7 +87,7 @@ class Server {
     app.use(express.json());
     app.use(cors({
       credentials: true,
-      origin: process.env.CLIENT_ORIGIN,
+      origin: process.env.CLIENT_ORIGIN || 'https://done-done.onrender.com',
     }));
     const server = new InversifyExpressServer(container, null, { rootPath: '/api' }, app);
     this.app = server.build();
