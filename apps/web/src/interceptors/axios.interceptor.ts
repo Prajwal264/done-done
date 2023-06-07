@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance } from 'axios';
 import { getAccessToken, getRefreshToken, setAccessToken } from '../helpers/token.helper';
+import { BASE_API_URL } from '../constants/environment';
 const wrapTokenMiddleware = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     (config: any) => {
@@ -48,7 +49,7 @@ const wrapTokenMiddleware = (instance: AxiosInstance) => {
   function refreshAccessToken() {
     const accessToken = getAccessToken();
     return axios.post(
-      `${process.env.BASE_API_URL}/api/auth/refreshtoken`,
+      `${process.env.BASE_API_URL || BASE_API_URL}/api/auth/refreshtoken`,
       {
         refreshToken: getRefreshToken(),
       },

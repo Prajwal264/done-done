@@ -1,7 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { wrapTokenMiddleware } from '../../interceptors/axios.interceptor';
+import { BASE_API_URL } from '../../constants/environment';
 
-const BASE_URL = process.env.BASE_API_URL + '/api/';
+const BASE_URL = (process.env.BASE_API_URL || BASE_API_URL) + '/api/';
 
 export interface GenericSuccessResponse {
   success: string;
