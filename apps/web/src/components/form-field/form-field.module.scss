@@ -1,6 +1,9 @@
 .formField {
   margin-bottom: 10px;
   position: relative;
+  :global .error {
+    border: 1.5px solid #ffa0a0;
+  }
   label {
     display: block;
     font-size: 13px;
@@ -15,6 +18,7 @@
     font-weight: 400;
     padding: 0.75em 1em;
     width: 100%;
+    outline: none;
   }
   img {
     position: absolute;

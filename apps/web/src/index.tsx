@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './app.component';
+import 'react-tooltip/dist/react-tooltip.css'
 import './styles/index.scss';
 import { Toaster } from 'react-hot-toast';
 
