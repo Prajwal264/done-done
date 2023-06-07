@@ -12,7 +12,7 @@ import TYPES from '../types';
 export class AuthController implements interfaces.Controller {
   constructor(
     @inject(TYPES.AuthService) readonly authService: AuthService,
-  ) {}
+  ) { }
 
   @httpPost('/register')
   public async signup(@request() req: Request, @response() res: Response) {
@@ -24,11 +24,11 @@ export class AuthController implements interfaces.Controller {
       if (!password) {
         throw Error('Password is mandatory');
       }
-      await this.authService.create({
+      const response = await this.authService.create({
         email,
         password,
       });
-      res.status(201).json({ success: true });
+      res.status(201).json(response);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

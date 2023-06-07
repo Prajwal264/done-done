@@ -42,7 +42,14 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    return user;
+    return {
+      acesssToken: createAccessToken({
+        userId: user.userId,
+      }, '1h'),
+      refreshToken: createRefreshToken({
+        userId: user.userId,
+      }, '7d'),
+    };
   }
 
   private async comparePasswords(password: string, userPassword: string): Promise<boolean> {
