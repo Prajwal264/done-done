@@ -1,0 +1,78 @@
+.addTaskModal {
+  padding: 0;
+  outline: none;
+  transition: box-shadow 0.5s;
+  width: 580px;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  max-width: 400px;
+  flex-grow: 0;
+  box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.35);
+  .modalBody {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+    color: inherit;
+    padding: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 0.875rem;
+    background-color: inherit;
+    .formActions {
+      margin: 6px -16px -16px;
+      padding: 16px;
+      border-top: 1px solid #ddd;
+      .actionsContainer {
+        margin-right: 5px;
+        border-radius: 3px;
+        flex-direction: row;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: -12px;
+        margin-top: -12px;
+        button {
+          max-width: max-content;
+          margin-bottom: unset;
+          margin: 12px 0 0 12px;
+        }
+        button:last-of-type {
+          color: rgba(0, 0, 0, 0.88);
+          background-color: transparent;
+          border-color: #d6d6d6;
+          &:hover {
+            background-color: #ebebeb;
+            border-color: #bdbdbd;
+          }
+        }
+      }
+    }
+    :global .confirmationMessage {
+      flex-grow: 1;
+      font-size: 18px;
+      line-height: 21px;
+      word-wrap: break-word;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 16px;
+      p {
+      }
+      .subtext {
+        font-size: 15px;
+        margin-top: 8px;
+      }
+    }
+  }
+}

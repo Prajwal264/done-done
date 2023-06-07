@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import styles from './task-item.module.scss';
 import CheckboxTick from '../../../assets/icons/icon-checkbox-tick.svg';
-import IconInbox from '../../../assets/icons/icon-inbox.svg';
 import IconEdit from '../../../assets/icons/icon-edit.svg';
 import IconDelete from '../../../assets/icons/icon-delete.svg';
 import { ITask } from '../../../services/api/task.api.service';
@@ -14,6 +13,7 @@ import { toggleAddTaskEditor } from '../../../features/add-task-editor/add-task-
 import useAudio from '../../../hooks/useAudio';
 import { toggleTaskDetailsModal } from '../../../features/task-detail-modal/task-detail-modal.slice';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
+import ConfirmationModal from '../../../components/popups/confirmation-modal/confirmation-modal.component';
 
 interface IProps {
   task: ITask;
@@ -23,6 +23,7 @@ interface IProps {
 
 const TaskItem: FC<IProps> = ({ task, index, isDragDropDisabled = false }) => {
   const [_, togglePlay] = useAudio('../../assets/audio/task-complete.mp3');
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const currentAddTaskEditorId = useSelector((state: RootState) => state.currentAddTaskEditor);
 
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const TaskItem: FC<IProps> = ({ task, index, isDragDropDisabled = false }) => {
   }, [addTaskEditorId]);
 
   const removeTask = useCallback(() => {
-    dispatch(deleteTask(task.taskId))
+    setShowDeleteConfirmationModal(true);
   }, [addTaskEditorId]);
 
   const showTaskDetailModal = useCallback(() => {
@@ -56,19 +57,31 @@ const TaskItem: FC<IProps> = ({ task, index, isDragDropDisabled = false }) => {
     );
   }, [task]);
 
+  const onConfirmDeletion = (confirm: boolean) => {
+    if (confirm) {
+      dispatch(deleteTask(task.taskId));
+    }
+    setShowDeleteConfirmationModal(false);
+  };
+
   return (
     <React.Fragment>
       {currentAddTaskEditorId === addTaskEditorId ? (
         <AddTask existingTaskDetails={task} addTaskEditorId={addTaskEditorId} />
       ) : (
-        <Draggable draggableId={task.taskId} index={index} isDragDisabled={isDragDropDisabled} >
+        <Draggable draggableId={task.taskId} index={index} isDragDisabled={isDragDropDisabled}>
           {(provided: DraggableProvided) => (
-            <div ref={provided.innerRef}
+            <div
+              ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              className={styles.taskItem}>
+              className={styles.taskItem}
+            >
               <div className={styles.taskItemBody}>
-                <button className={`${styles.checkbox} ${task.completed ? styles.active : ''}`} onClick={toggleCompleted}>
+                <button
+                  className={`${styles.checkbox} ${task.completed ? styles.active : ''}`}
+                  onClick={toggleCompleted}
+                >
                   <div className={styles.checkboxCircle}>
                     <CheckboxTick />
                   </div>
@@ -78,14 +91,14 @@ const TaskItem: FC<IProps> = ({ task, index, isDragDropDisabled = false }) => {
                     <div className={`${styles.taskContent} ${task.completed ? styles.active : ''}`}>{task.title}</div>
                     {task.description && <div className={styles.taskDescription}>{task.description}</div>}
                   </div>
-                  <div className={styles.infoFlags}>
+                  {/* <div className={styles.infoFlags}>
                     <div className={styles.project}>
                       <a href="/all">
                         <span>All Tasks</span>
                         <IconInbox />
                       </a>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className={styles.taskItemActions}>
                   <button className={styles.actionItem} onClick={triggerEditFlow}>
@@ -96,6 +109,19 @@ const TaskItem: FC<IProps> = ({ task, index, isDragDropDisabled = false }) => {
                   </button>
                 </div>
               </div>
+              {showDeleteConfirmationModal && (
+                <ConfirmationModal
+                  message={
+                    <div className={'confirmationMessage'}>
+                      <p>Are you sure you want to</p>
+                      <p>delete this task ?</p>
+                      <p className="subtext">This action cannot be undone.</p>
+                    </div>
+                  }
+                  closePopup={() => setShowDeleteConfirmationModal(false)}
+                  confirm={onConfirmDeletion}
+                />
+              )}
             </div>
           )}
         </Draggable>

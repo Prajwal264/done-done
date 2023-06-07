@@ -16,12 +16,11 @@ const Dashboard: React.FC<IDashboardProps> = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    debugger;
     const accessToken = getAccessToken();
     if (!accessToken) {
       navigate('/login');
     }
-  }, [])
+  }, []);
 
   return (
     <Provider store={store}>
@@ -48,6 +47,6 @@ const Dashboard: React.FC<IDashboardProps> = () => {
       </Routes>
       <TaskDetailsModal />
     </Provider>
-  )
+  );
 };
 export default Dashboard;

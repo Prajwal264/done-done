@@ -123,7 +123,7 @@ const AddTask: FC<IAddTaksProps> = ({
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                placeholder="Description"
+                placeholder="Description(optional)"
               ></textarea>
             </div>
           </div>

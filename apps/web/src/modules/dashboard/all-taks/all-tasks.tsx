@@ -21,10 +21,7 @@ const AllTasksPage: FC<Props> = () => {
     loadDependencies();
   }, []);
 
-  const taskExists = useMemo(
-    () => tasks.length,
-    [tasks],
-  );
+  const taskExists = useMemo(() => tasks.length, [tasks]);
 
   const loadDependencies = async () => {
     if (!taskExists) {

@@ -57,7 +57,7 @@ const AddTaskModal: React.FC<IProps> = ({ closePopup }) => {
               <div className={styles.inputFields}>
                 <input type="text" name="title" placeholder="Task name" onChange={handleChange} />
                 <div className={styles.textAreaWrapper}>
-                  <textarea name="description" placeholder="description" onChange={handleChange}></textarea>
+                  <textarea name="description" placeholder="Description (optional)" onChange={handleChange}></textarea>
                 </div>
               </div>
             </div>

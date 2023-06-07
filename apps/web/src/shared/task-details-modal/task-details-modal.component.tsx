@@ -8,33 +8,11 @@ import { RootState } from '../../store';
 import styles from './task-details-modal.module.scss';
 import IconInbox from '../../assets/icons/icon-inbox-page.svg';
 import CheckboxTick from '../../assets/icons/icon-checkbox-tick.svg';
-import { TaskDetailModalTabs, toggleTaskDetailsModal } from '../../features/task-detail-modal/task-detail-modal.slice';
-import Tabs, { ITab } from '../../packages/tabs/tabs.component';
-import SubTasksTab from './sub-tasks-tab/sub-tasks-tab.component';
-import CommentsTab from './comments-tab/comments-tab.component';
-import ActivitiesTab from './activties-tab/activities-tab.component';
+import { toggleTaskDetailsModal } from '../../features/task-detail-modal/task-detail-modal.slice';
 import { toggleAddTaskEditor } from '../../features/add-task-editor/add-task-editor.slice';
 import AddTask from '../../modules/dashboard/add-task/add-task.component';
 
 const addTaskEditorId = 'TASK_DETAILS_MODAL_ADD_TASK_EDITOR';
-
-// const TABS: ITab[] = [
-//   {
-//     tabId: TaskDetailModalTabs.SUB_TASKS,
-//     tabname: 'Sub-tasks',
-//     component: <SubTasksTab />,
-//   },
-//   {
-//     tabId: TaskDetailModalTabs.COMMENTS,
-//     tabname: 'Comments',
-//     component: <CommentsTab />,
-//   },
-//   {
-//     tabId: TaskDetailModalTabs.ACTIVITY,
-//     tabname: 'Activity',
-//     component: <ActivitiesTab />,
-//   },
-// ];
 
 interface Props { }
 
@@ -111,7 +89,9 @@ const TaskDetailsModal: React.FC<Props> = ({ }) => {
                       <div className={styles.itemOverviewContent}>
                         <div className={styles.taskContent}>{task.title}</div>
                       </div>
-                      <div className={styles.itemOverviewDescription}>{task.description || 'Description'}</div>
+                      <div className={styles.itemOverviewDescription}>
+                        {task.description || 'Description (optional)'}
+                      </div>
                     </div>
                     {/* <div className={styles.itemOverviewSub}>
                       <button className={styles.dueControls}>

@@ -101,7 +101,6 @@ export const tasksSlice = createSlice({
     });
     builder.addCase(editTask.fulfilled, (state, action) => {
       const { payload } = action;
-      debugger;
       const updatedTasks = state.map((task) => {
         if (task.taskId === payload.taskId) {
           return payload as ITask;
