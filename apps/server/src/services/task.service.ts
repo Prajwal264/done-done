@@ -141,7 +141,7 @@ export class TaskService {
               completed: updatedPayload.completed ?? task.completed,
             };
           }
-          return task;
+          return item;
         });
       }
       userTaskList?.save();
